@@ -1,0 +1,16 @@
+[project]
+name = "sauce-fastapi"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Mllnmrk",email = "maquino@pic.net.ph"}
+]
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi[standard] (>=0.129.0,<0.130.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
