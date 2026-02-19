@@ -1,13 +1,24 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.api.v1.api import api_router
+from app.core.config import settings
 
 
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: could add DB connection checks here
+    print("Startup")
+    yield
+    # Shutdown: clean up resources
+    print("Shutdown")
 
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    lifespan=lifespan,
+)
+
+app.include_router(api_router, prefix=settings.API_V1_STR)
